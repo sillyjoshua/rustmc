@@ -13,7 +13,6 @@
 </p>
 
 <p align="center">
-  <a href="https://playhorizon.dev"><b>Website</b></a> ·
   <a href="#download"><b>Download</b></a> ·
   <a href="https://playhorizon.dev/docs/"><b>Documentation</b></a> ·
   <a href="https://github.com/horizon-rust/horizon/releases"><b>Release notes</b></a> ·
