@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="docs/media/banner.webp" alt="The Horizon website: the game you know, rebuilt in Rust" width="100%">
+  <img src="docs/media/banner.webp" alt="RustMC: Minecraft Java Edition rebuilt in Rust" width="100%">
 </p>
 
 <p align="center">
-  <a href="https://github.com/horizon-rust/horizon/actions/workflows/ci.yml"><img src="https://github.com/horizon-rust/horizon/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI"></a>
+  <a href="https://github.com/sillyjoshua/rustmc/actions/workflows/ci.yml"><img src="https://github.com/sillyjoshua/rustmc/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI"></a>
   <img src="https://img.shields.io/badge/Minecraft-Java%2026.3-5D9C3F" alt="Minecraft Java 26.3">
   <img src="https://img.shields.io/badge/Rust-stable-B7410E?logo=rust&logoColor=white" alt="Rust">
   <img src="https://img.shields.io/badge/vanilla%20parity-100%25-F0795A" alt="Vanilla parity 100%">
@@ -14,14 +14,14 @@
 
 <p align="center">
   <a href="#download"><b>Download</b></a> ·
-  <a href="https://playhorizon.dev/docs/"><b>Documentation</b></a> ·
-  <a href="https://github.com/horizon-rust/horizon/releases"><b>Release notes</b></a> ·
+  <a href="https://github.com/sillyjoshua/rustmc/tree/main/docs/"><b>Documentation</b></a> ·
+  <a href="https://github.com/sillyjoshua/rustmc/releases"><b>Release notes</b></a> ·
   <a href="ROADMAP.md"><b>Roadmap</b></a> ·
   <a href="#project-status"><b>Project status</b></a> ·
   <a href="#contributing"><b>Contributing</b></a>
 </p>
 
-# Horizon
+# RustMC
 
 Minecraft: Java Edition 26.3, rewritten in Rust. Same worlds, same rules, same terrain, checked against the Java game by more than 300 differential harnesses. Free, open source and unofficial.
 
@@ -29,9 +29,11 @@ Minecraft: Java Edition 26.3, rewritten in Rust. Same worlds, same rules, same t
 
 ## Download
 
-Get **the Horizon launcher** from [playhorizon.dev](https://playhorizon.dev). It installs and updates the game, prepares its files from your copy of Minecraft, and updates itself.
+Get the **RustMC launcher** from the [GitHub Releases page](https://github.com/sillyjoshua/rustmc/releases). Choose the latest `launcher@...` release for your platform. The launcher installs and updates the game, prepares its files from your copy of Minecraft, and updates itself.
 
-**You need** a Microsoft account that owns Java Edition ([why](docs/microsoft-account.md)) and a GPU with Vulkan or OpenGL 3.3 (Linux), Vulkan or DirectX 12 (Windows), or a Mac (Apple Silicon, or Intel from the next Nightly). An existing Minecraft install (official launcher, Prism, MultiMC...) is reused; without one, Play downloads 26.3 from Mojang for your account. Step by step: [Install and first launch](https://playhorizon.dev/docs/install).
+**Game downloads:** [Windows](https://github.com/sillyjoshua/rustmc/releases/download/nightly/horizon-windows-x64.zip) · [Linux](https://github.com/sillyjoshua/rustmc/releases/download/nightly/horizon-linux-x86_64.tar.gz) · [macOS Apple Silicon](https://github.com/sillyjoshua/rustmc/releases/download/nightly/horizon-macos-arm64.zip) · [macOS Intel](https://github.com/sillyjoshua/rustmc/releases/download/nightly/horizon-macos-x64.zip) · [All Nightly files](https://github.com/sillyjoshua/rustmc/releases/tag/nightly). The launcher is recommended because it selects the correct build and handles updates.
+
+**You need** a Microsoft account that owns Java Edition ([why](docs/microsoft-account.md)) and a GPU with Vulkan or OpenGL 3.3 (Linux), Vulkan or DirectX 12 (Windows), or a Mac (Apple Silicon, or Intel from the next Nightly). An existing Minecraft install (official launcher, Prism, MultiMC...) is reused; without one, Play downloads 26.3 from Mojang for your account. Installation: [Launcher guide](launcher/README.md).
 
 <table>
   <tr>
@@ -43,10 +45,10 @@ Get **the Horizon launcher** from [playhorizon.dev](https://playhorizon.dev). It
 ## What works today
 
 - **The game:** vanilla world generation, mobs, villagers, raids, redstone, every command, the HUD and the recipe book, on vanilla saves. Worlds from 1.8 to 26.2 are upgraded. [Status](#project-status).
-- **Extras:** new menus, graphics presets, distant terrain up to 1024 chunks, controllers, zoom, minimap and more, off by default where they change the vanilla look. [Settings](https://playhorizon.dev/docs/settings).
+- **Extras:** new menus, graphics presets, distant terrain up to 1024 chunks, controllers, zoom, minimap and more, off by default where they change the vanilla look. [Settings](https://github.com/sillyjoshua/rustmc/tree/main/docs/settings).
 - **Packs:** resource packs, and data packs with functions, predicates, item modifiers and world generation.
-- **Multiplayer:** invite friends with a code, Open to LAN, join servers (online mode included). [Multiplayer](https://playhorizon.dev/docs/multiplayer).
-- **Mods:** content mods (blocks, items, data) and native Rust mods, built by the launcher with nothing to install. Java mod jars do not run. [Mods](https://playhorizon.dev/docs/mods).
+- **Multiplayer:** invite friends with a code, Open to LAN, join servers (online mode included). [Multiplayer](https://github.com/sillyjoshua/rustmc/tree/main/docs/multiplayer).
+- **Mods:** content mods (blocks, items, data) and native Rust mods, built by the launcher with nothing to install. Java mod jars do not run. [Mods](https://github.com/sillyjoshua/rustmc/tree/main/docs/mods).
 
 In the Rust client, with vanilla assets and no mods or shaders:
 
@@ -66,11 +68,11 @@ In the Rust client, with vanilla assets and no mods or shaders:
 
 ## Host a server
 
-The launcher's **Servers** page creates, starts, backs up and updates a server, and invites friends over Tailscale. On a VPS, `horizon-server` installs with one command and needs no Java. [Host a server](https://playhorizon.dev/docs/hosting) ([reference](docs/hosting.md)).
+The launcher's **Servers** page creates, starts, backs up and updates a server, and invites friends over Tailscale. On a VPS, `horizon-server` installs with one command and needs no Java. [Host a server](https://github.com/sillyjoshua/rustmc/tree/main/docs/hosting) ([reference](docs/hosting.md)).
 
 ## Modpacks
 
-The launcher imports Modrinth and CurseForge packs and plays the mods Horizon can carry over: today, content mods made of data and assets, not Java code. [Modpacks](https://playhorizon.dev/docs/modpacks).
+The launcher imports Modrinth and CurseForge packs and plays the mods Horizon can carry over: today, content mods made of data and assets, not Java code. [Modpacks](https://github.com/sillyjoshua/rustmc/tree/main/docs/modpacks).
 
 ## Agent control
 
@@ -95,8 +97,8 @@ Needs Rust 1.90+, Python 3.10+, JDK 25, and on Linux `libasound2-dev libudev-dev
 2. **Server jar:** the 26.3 server jar (`downloads.server.url` in `versions/26.3/26.3.json`), passed once with `--server-jar` or `HORIZON_SERVER_JAR`.
 
 ```sh
-git clone https://github.com/horizon-rust/horizon.git
-cd horizon
+git clone https://github.com/sillyjoshua/rustmc.git
+cd rustmc
 cargo run --release -p horizon-prepare -- --prepare --server-jar ~/Downloads/server.jar   # needs JDK 25
 cargo run --release -p horizon-prepare -- sounds   # optional: sounds from your launcher install
 cargo run --release -p horizon-client
@@ -106,11 +108,11 @@ Prepared files land in the gitignored `.local/`: never commit or share them. Opt
 
 ## Roadmap
 
-What is in progress, what comes next and where to help: [ROADMAP.md](ROADMAP.md), or [playhorizon.dev/hub](https://playhorizon.dev/hub) with the work board and what shipped.
+What is in progress, what comes next and where to help: [ROADMAP.md](ROADMAP.md), or [playhorizon.dev/hub](https://github.com/sillyjoshua/rustmc/blob/main/ROADMAP.md) with the work board and what shipped.
 
 ## Contributing
 
-Issues and pull requests are welcome: read [CONTRIBUTING.md](CONTRIBUTING.md) (vanilla first, small pull requests). Questions: [Discord](https://discord.gg/playhorizon). Before a pull request, run the self-check and paste its output:
+Issues and pull requests are welcome: read [CONTRIBUTING.md](CONTRIBUTING.md) (vanilla first, small pull requests). Questions: [GitHub Discussions](https://github.com/sillyjoshua/rustmc/discussions). Before a pull request, run the self-check and paste its output:
 
 ```sh
 git config core.hooksPath .githooks
@@ -154,6 +156,6 @@ Skins served over https show the default skin unless already cached; pack icons 
 
 [MIT](LICENSE), for the project's original work; dependencies keep their own licences ([notices](THIRD_PARTY_NOTICES.md)). Minecraft is a trademark of Mojang Synergies AB; its code and assets belong to Mojang and Microsoft under the [Minecraft EULA](https://www.minecraft.net/en-us/eula).
 
-## Author
+## Project origin
 
-Made by [Ludovic Marie](https://lu4ovic.com) ([@ludovic111](https://github.com/ludovic111)).
+RustMC is a community fork of [Horizon](https://github.com/horizon-rust/horizon). It retains the upstream project's MIT licence and original contributor attribution; Minecraft is not affiliated with this project.
