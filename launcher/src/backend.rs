@@ -10,6 +10,7 @@ use std::sync::mpsc::Sender;
 use std::sync::{Arc, Mutex};
 
 pub const REPO: &str = "sillyjoshua/rustmc";
+pub const GAME_REPO: &str = "horizon-rust/horizon";
 pub const README_URL: &str = "https://github.com/sillyjoshua/rustmc/blob/main/launcher/README.md";
 /// The players' page on connecting an AI agent (the website's docs/agents.md).
 pub const AGENT_DOCS_URL: &str = "https://github.com/sillyjoshua/rustmc/blob/main/docs/native-client.md#agent-control-horizon-ctl-and-mcp";
@@ -311,9 +312,9 @@ pub fn compare_versions(a: &str, b: &str) -> std::cmp::Ordering {
     release_order(a).cmp(&release_order(b))
 }
 
-/// Every published release of the repository, both kinds, as GitHub's JSON.
+/// Every published game release from the upstream game repository, as GitHub JSON.
 fn release_list() -> Result<serde_json::Value, String> {
-    let url = format!("https://api.github.com/repos/{REPO}/releases?per_page=100");
+    let url = format!("https://api.github.com/repos/{GAME_REPO}/releases?per_page=100");
     get(&url)?.into_json().map_err(|e| e.to_string())
 }
 
@@ -390,10 +391,19 @@ pub(crate) fn game_releases(list: &serde_json::Value) -> Vec<Release> {
 /// a day, so the newest launcher release can be older than all of those: then the newest
 /// `launcher@` and `launcher-v` tags are looked up one by one (a draft's tag is skipped: it has no
 /// public release).
-fn launcher_releases_in(list: &serde_json::Value) -> Vec<Release> {
-    launcher_releases_in_with(list, |url| {
+fn launcher_releases_in(_game_list: &serde_json::Value) -> Vec<Release> {
+    let Ok(list) = launcher_release_list() else {
+        return Vec::new();
+    };
+    launcher_releases_in_with(&list, |url| {
         get(&url)?.into_json().map_err(|e| e.to_string())
     })
+}
+
+/// This fork publishes launcher updates independently from the upstream game builds.
+fn launcher_release_list() -> Result<serde_json::Value, String> {
+    let url = format!("https://api.github.com/repos/{REPO}/releases?per_page=100");
+    get(&url)?.into_json().map_err(|e| e.to_string())
 }
 
 fn launcher_releases_in_with(
@@ -2545,9 +2555,8 @@ fn launcher_update_from(releases: &[Release], own: &str) -> Option<Release> {
         .cloned()
 }
 
-/// Load the game's release list and both update kinds from the same GitHub response.
-/// Publish the game releases before any fallback lookups for older launcher tags, so those
-/// lookups cannot hold up the release pages or opening animation. A list error reaches both.
+/// Load upstream game releases and this fork's launcher releases independently.
+/// A launcher API error only disables self-update; it must not block game downloads.
 pub fn releases_and_updates(
     on_releases: impl FnOnce(Result<Vec<Release>, String>),
 ) -> Result<Updates, String> {

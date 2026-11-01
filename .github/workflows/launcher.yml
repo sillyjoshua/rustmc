@@ -81,7 +81,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           RELEASES_PAUSED: ${{ vars.RELEASES_PAUSED }}
           # A push or a run off main builds its own commit; otherwise main's newest commit with green checks.
-          HEAD_SHA: ${{ (github.event_name == 'push' || steps.mode.outputs.dry_run == 'true') && github.sha || '' }}
+          HEAD_SHA: ${{ (github.event_name == 'push' || steps.mode.outputs.dry_run == 'true' || github.event_name == 'workflow_dispatch') && github.sha || '' }}
           FORCE: ${{ inputs.force && 'yes' || '' }}
         run: |
           python3 tools/release_train.py decide --kind launcher ${HEAD_SHA:+--head "$HEAD_SHA"} ${FORCE:+--force} | tee decision.json
@@ -125,7 +125,7 @@ jobs:
             # The C runtime linked in: without it the launcher asks for VCRUNTIME140.dll,
             # which only the Visual C++ redistributable installs.
             rustflags: -C target-feature=+crt-static
-    runs-on: ${{ matrix.mac && (vars.MAC_RUNNER || 'ludovics-mac-mini') || matrix.os }}
+    runs-on: ${{ matrix.mac && github.repository == 'horizon-rust/horizon' && (vars.MAC_RUNNER || 'ludovics-mac-mini') || (matrix.mac && 'macos-14') || matrix.os }}
     # Notarizing the app and then the .dmg can take a few minutes each.
     timeout-minutes: ${{ matrix.mac && 60 || 40 }}
     env:
