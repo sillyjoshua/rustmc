@@ -466,7 +466,7 @@ def gather(kind, head, releases=None):
     paths."""
     releases = published_releases() if releases is None else releases
     last = last_release(releases, kind)
-    base = last["tag_name"] if last else run("git", "rev-list", "--max-parents=0", head).split()[0]
+    base = last["tag_name"] if last else (os.environ.get("RELEASE_BASE_SHA") or run("git", "rev-list", "--max-parents=0", head).split()[0])
     return last, merged_between(kind, base, head)
 
 

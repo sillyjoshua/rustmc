@@ -76,6 +76,12 @@ jobs:
       - id: mode
         # Off main every run is a dry run (a launcher branch's push only builds).
         run: echo "dry_run=${{ github.ref != 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.dry_run) }}" >> "$GITHUB_OUTPUT"
+      - name: Find the fork's release baseline
+        if: github.repository != 'horizon-rust/horizon'
+        run: |
+          git remote add upstream https://github.com/horizon-rust/horizon.git
+          git fetch --quiet upstream main
+          echo "RELEASE_BASE_SHA=$(git merge-base "$GITHUB_SHA" refs/remotes/upstream/main)" >> "$GITHUB_ENV"
       - id: decide
         env:
           GH_TOKEN: ${{ github.token }}
